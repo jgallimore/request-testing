@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.cert.CRL;
 
 public class TomcatBufferTest {
 
@@ -59,8 +60,13 @@ public class TomcatBufferTest {
                 String[] request = new String[1];
                 request[0] =
                         "POST /test HTTP/1.1" + CRLF +
+                                0x01 + "Transfer-Encoding: chunked" + CRLF +
+                                "Content-Length: 35" + CRLF +
                                 "host: localhost:8080" + CRLF +
                                 "Connection: close" + CRLF +
+                                "0" + CRLF + CRLF +
+                                "GET /robots.txt HTTP/1.1" + CRLF +
+                                "X:X" + CRLF +
                                 CRLF;
 
                 setRequest(request);
